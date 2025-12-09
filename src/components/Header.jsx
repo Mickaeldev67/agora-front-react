@@ -1,7 +1,7 @@
 function Header() {
     return (
         <>
-            <header className="flex justify-between bg-[#c22c2c] p-2 text-white">
+            <header className="flex justify-between bg-midnight p-2 text-white">
                 <span>Agora</span>
                 <div className="">
                     <input type="text" placeholder="Entrez votre recherche" />
