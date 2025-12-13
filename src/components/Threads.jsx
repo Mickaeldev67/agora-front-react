@@ -1,4 +1,8 @@
 import useFetch from "../services/useFetch";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { faComment } from "@fortawesome/free-solid-svg-icons";
 
 
 function Threads () {
@@ -10,12 +14,37 @@ function Threads () {
     console.log();
     return (
         <>
-            <h1>Les meilleurs threads</h1>
-            {data && data.map((thread) => (
-                <li key={thread.id}>
-                    {thread.title} ({thread.content}) ({thread.pseudo}) ({thread.createdAt}) ({thread.nbVote})
-                </li>
-            ))}
+            <main className="bg-primary-50 p-8 h-[95vh]">
+                <h1 className="text-primary-400 text-2xl">Les meilleurs threads</h1>
+                {loading && <p>Chargement... Veuillez patienter</p>}
+                {data && data.map((thread) => (
+                    <section key={thread.id} className="border rounded p-4 mb-4 bg-gray-50">
+                        <p className="flex text-xs flex flex-col">
+                            <div className="flex gap-2">
+                                <span className="font-bold">{thread.community}</span>
+                                <span>{thread.createdAt}</span> 
+                            </div>
+                            <span className="text-gray-400">{thread.pseudo}</span>
+                        </p>
+                        <span className="text-xl text-gray-800">{thread.title}</span>
+                        <p className="text-gray-600">{thread.content}</p>
+                        {thread.nbVote > 0 ? (
+                            <div className="text-gray-500">
+                                <FontAwesomeIcon icon={faArrowUp} className="" /><span>{thread.nbVote}</span>
+                                <FontAwesomeIcon icon={faArrowDown} />
+                                <FontAwesomeIcon icon={faComment} /><span>{thread.nbPost}</span>
+                            </div>
+                            ) : (
+                            <div className="text-gray-500" >
+                                <FontAwesomeIcon icon={faArrowUp} />
+                                <FontAwesomeIcon icon={faArrowDown} /><span>{thread.nbVote}</span>       
+                                <FontAwesomeIcon icon={faComment} /><span>{thread.nbPost}</span>                         
+                            </div>
+                        )}   
+                    </section>
+                ))}
+            </main>
+            
         </>
     )
 }
