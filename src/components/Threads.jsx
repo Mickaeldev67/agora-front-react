@@ -1,8 +1,6 @@
 import useFetch from "../services/useFetch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
-import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
-import { faComment } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUp, faComment, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 
 
 function Threads () {
