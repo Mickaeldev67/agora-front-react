@@ -49,7 +49,7 @@ function Header() {
 
                     {!loading && data && debouncedSearch != '' && (
                         <div className="absolute bg-gray-50 text-gray-400 left-0 right-0 rounded border">
-                            {data.communities && (
+                            {data.communities > 0 && (
                                 <>
                                     <div className="flex justify-center">
                                         <span>Communities</span>
@@ -62,7 +62,7 @@ function Header() {
                                     ))}
                                 </>
                             )}
-                            {data.threads && (
+                            {data.threads > 0 && (
                                 <>
                                     <div className="flex justify-center">
                                         <span>Threads</span>
