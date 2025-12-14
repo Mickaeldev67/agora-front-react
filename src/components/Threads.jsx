@@ -5,7 +5,6 @@ import { faArrowUp, faComment, faArrowDown } from "@fortawesome/free-solid-svg-i
 
 function Threads () {
     const url = import.meta.env.VITE_API_URL;
-    console.log(url);
     const { data , loading, error } = useFetch(`${url}/thread/best-reacted`);
     
     console.log(data);
@@ -17,13 +16,13 @@ function Threads () {
                 {loading && <p>Chargement... Veuillez patienter</p>}
                 {data && data.map((thread) => (
                     <section key={thread.id} className="border rounded p-4 mb-4 bg-gray-50">
-                        <p className="flex text-xs flex flex-col">
+                        <div className="flex text-xs flex flex-col">
                             <div className="flex gap-2">
                                 <span className="font-bold">{thread.community}</span>
                                 <span>{thread.createdAt}</span> 
                             </div>
                             <span className="text-gray-400">{thread.pseudo}</span>
-                        </p>
+                        </div>
                         <span className="text-xl text-gray-800">{thread.title}</span>
                         <p className="text-gray-600">{thread.content}</p>
                         {thread.nbVote > 0 ? (
