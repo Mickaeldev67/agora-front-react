@@ -1,12 +1,12 @@
 import Header from "../components/Header";
-import Threads from "../components/Threads";
+import BestThreads from "../components/BestThreads";
 
 function Home () {
 
     return(
         <>
             <Header />
-            <Threads />
+            <BestThreads />
         </>
         
     )

@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faMessage, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import useFetch from "../services/useFetch";
+import { Link } from "react-router";
 
 function Header() {
     const [search, setSearch] = useState('');
@@ -33,7 +34,7 @@ function Header() {
     return (
         <>
             <header className="flex justify-between items-center bg-primary-400 p-2 pl-5 pr-5 text-primary-50 h-[5vh]">
-                <span>Agora</span>
+                <Link to={'/'}><span>Agora</span></Link>
                 <div className="relative">
                     <div className="w-[33vw]">
                         <input value={search} onChange={searchingAPostOrACommunity} className="p-2 bg-gray-50 text-gray-400 rounded w-full" type="text" placeholder="Entrez votre recherche" />

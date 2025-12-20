@@ -7,6 +7,7 @@ function useFetch(url, options = {}) {
 
     useEffect(() => {
         if(!url) return;
+        setLoading(true);
         fetch(url,
             {
                 method: options.method || 'GET',
