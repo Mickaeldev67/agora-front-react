@@ -26,15 +26,22 @@ function Thread () {
                 { data && (
                     <ThreadComponent thread={data.thread}/>
                 )}
-                { data && data.posts.map(post => (
-                    <section className="border rounded p-4 mb-4 bg-gray-50" key={post.id}>
-                        <div className="text-xs">
-                            <span className="font-bold">{post.pseudo}</span> <span>{new Date(post.updatedAt ?? post.createdAt).toLocaleDateString('fr-FR')}</span>
-                        </div>
-                        <p>{post.content}</p>
-                        <Reaction nbVote={post.nbVote} />
-                    </section>
-                ))}
+                { data && (
+                    <>
+                        <h2 className="text-primary-400 text-xl">Comments</h2>
+                        {
+                            data.posts.map(post => (
+                                <section className="border rounded p-4 mb-4 bg-gray-50" key={post.id}>
+                                    <div className="text-xs">
+                                        <span className="font-bold">{post.pseudo}</span> <span>{new Date(post.updatedAt ?? post.createdAt).toLocaleDateString('fr-FR')}</span>
+                                    </div>
+                                    <p>{post.content}</p>
+                                    <Reaction nbVote={post.nbVote} />
+                                </section>
+                            ))
+                        }
+                    </>
+                )}
 
             </main>
         </>
