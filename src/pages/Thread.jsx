@@ -30,7 +30,8 @@ function Thread () {
                     <>
                         <h2 className="text-primary-400 text-xl">Comments</h2>
                         {
-                            data.posts.map(post => (
+                            data.posts.length === 0 ? <p>Il n'y a pas de post sur ce thread, pourquoi ne pas vous lancer ?</p> 
+                            : data.posts.map(post => (
                                 <section className="border rounded p-4 mb-4 bg-gray-50" key={post.id}>
                                     <div className="text-xs">
                                         <span className="font-bold">{post.pseudo}</span> <span>{new Date(post.updatedAt ?? post.createdAt).toLocaleDateString('fr-FR')}</span>
