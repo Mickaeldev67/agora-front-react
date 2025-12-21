@@ -1,6 +1,6 @@
 import useFetch from "../services/useFetch";
-import Skeleton from 'react-loading-skeleton'
-import ThreadComponent from "./ThreadComponent";
+import Skeleton from './SkeletonComponent';
+import Thread from "./ThreadComponent";
 
 
 function Threads() {
@@ -11,18 +11,16 @@ function Threads() {
             <main className="bg-primary-50 p-8 h-[95vh]">
                 <h1 className="text-primary-400 text-2xl">Les meilleurs threads</h1>
 
+                { error && (
+                    <p>Erreur { error.status } : { error.message }</p>
+                )}
+
                 {loading && (
-                    <section className="border rounded p-4 mb-4 bg-gray-50">
-                        <Skeleton height={10} width={120} />
-                        <Skeleton height={10} width={80} />
-                        <Skeleton height={24} />
-                        <Skeleton height={20} />
-                        <Skeleton height={20} width={70}/>
-                    </section>
+                    <Skeleton />
                 )}
 
                 {data && data.map(thread => (
-                    <ThreadComponent key={thread.id} thread={thread}/>
+                    <Thread key={thread.id} thread={thread} type={"thread"}/>
                 ))}
             </main>
 
