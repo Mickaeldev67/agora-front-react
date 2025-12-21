@@ -31,6 +31,11 @@ function Header() {
         setSearch(e.target.value);
     }
 
+    function resetSearchBar() {
+        setSearch('');
+        setDebouncedSearch('');
+    }
+
     return (
         <>
             <header className="flex justify-between items-center bg-primary-400 p-2 pl-5 pr-5 text-primary-50 h-[5vh]">
@@ -53,10 +58,12 @@ function Header() {
                                         <span>Communities</span>
                                     </div>
                                     {data.communities.map((community) => (
-                                        <div key={ community.id } className="hover:bg-gray-100 p-4 rounded">
-                                            <span className="text-gray-600">{ community.name }</span>
-                                            <p>{ community.description }</p>
-                                        </div>
+                                        <Link key={ community.id } to={`/community/${community.id}`} onClick={resetSearchBar}>
+                                            <div  className="hover:bg-gray-100 p-4 rounded">
+                                                <span className="text-gray-600">{ community.name }</span>
+                                                <p>{ community.description }</p>
+                                            </div>
+                                        </Link>
                                     ))}
                                 </>
                             )}
@@ -66,10 +73,12 @@ function Header() {
                                         <span>Threads</span>
                                     </div>
                                     {data.threads.map((thread) => (
-                                        <div key={ thread.id } className="hover:bg-gray-100 p-4 rounded">
-                                            <span className="text-gray-600">{ thread.title }</span>
-                                            <p>{ thread.content }</p>
-                                        </div>
+                                        <Link key={ thread.id } to={`/thread/${thread.id}`} onClick={resetSearchBar}>
+                                            <div  className="hover:bg-gray-100 p-4 rounded">
+                                                <span className="text-gray-600">{ thread.title }</span>
+                                                <p>{ thread.content }</p>
+                                            </div>
+                                        </Link>
                                     ))}
                                 </>
                             )}
