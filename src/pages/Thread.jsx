@@ -2,9 +2,8 @@ import { useParams } from "react-router";
 import useFetch from "../services/useFetch";
 import Header from "../components/Header";
 import Skeleton from "react-loading-skeleton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUp, faComment, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import Reaction from "../components/Reaction";
+import ThreadComponent from "../components/ThreadComponent";
 
 function Thread () {
     const params = useParams();
@@ -26,7 +25,13 @@ function Thread () {
                         <Skeleton height={20} width={70}/>
                     </section>
                 )}
+
+                { error && (
+                    <p>Erreur { error.status } : { error.message }</p>
+                )}
                 { data && (
+                    <ThreadComponent thread={data.thread}/>
+                    /*
                     <section className="border rounded p-4 mb-4 bg-gray-50">
                         <div className="text-xs flex flex-col">
                             <div className="flex gap-2">
@@ -41,6 +46,7 @@ function Thread () {
 
                         <Reaction nbVote={data.thread.nbVote} nbPost={data.thread.nbPost} />
                     </section>
+                    */
                 )}
                 { data && data.posts.map(post => (
                     <section className="border rounded p-4 mb-4 bg-gray-50" key={post.id}>

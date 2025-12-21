@@ -1,6 +1,6 @@
 import useFetch from "../services/useFetch";
 import Skeleton from 'react-loading-skeleton'
-import Reaction from "./Reaction";
+import ThreadComponent from "./ThreadComponent";
 
 
 function Threads() {
@@ -22,20 +22,7 @@ function Threads() {
                 )}
 
                 {data && data.map(thread => (
-                    <section key={thread.id} className="border rounded p-4 mb-4 bg-gray-50">
-                        <div className="text-xs flex flex-col">
-                            <div className="flex gap-2">
-                                <span className="font-bold">{thread.community}</span>
-                                <span>{new Date(thread.updatedAt ?? thread.createdAt).toLocaleDateString('fr-FR')}</span>
-                            </div>
-                            <span className="text-gray-400">{thread.pseudo}</span>
-                        </div>
-
-                        <span className="text-xl text-gray-800">{thread.title}</span>
-                        <p className="text-gray-600">{thread.content}</p>
-
-                        <Reaction nbPost={thread.nbPost} nbVote={thread.nbVote} threadId={thread.id}/> 
-                    </section>
+                    <ThreadComponent key={thread.id} thread={thread}/>
                 ))}
             </main>
 

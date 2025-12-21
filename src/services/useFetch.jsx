@@ -19,7 +19,14 @@ function useFetch(url, options = {}) {
             }
         )
             .then((res) => {
-                if (!res.ok) throw new Error(`Erreur HTTP : ${res.status}`);
+                if (!res.ok) {
+                    return res.json().then(body => {
+                        throw {
+                            status: res.status,
+                            message: body?.message || res.statusText,
+                        };
+                    });
+                }
                 return res.json();
             })
             .then((data) => setData(data))
