@@ -7,6 +7,7 @@ import { Link } from "react-router";
 function Header() {
     const [search, setSearch] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState('');
+    const [isLoginBoxOpen, setIsLoginBoxOpen] = useState(false);
     const url = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
@@ -14,8 +15,26 @@ function Header() {
             setDebouncedSearch(search);
         }, 500);
 
-        return () => clearTimeout(timeout);
+        
+
+        return () => {
+            clearTimeout(timeout);
+        };
     }, [search]);
+
+    useEffect(() => {
+        function handleClickOutside(e) {
+            if (!e.target.closest('#loginBox') && !e.target.closest('#btnLogin')) {
+                setIsLoginBoxOpen(false);
+            }
+        }
+
+        document.addEventListener('click', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
 
     const { data, loading, error } = useFetch(
         debouncedSearch ? `${url}/search` : null, 
@@ -86,11 +105,20 @@ function Header() {
                     )}
                 </div>
                 
-                <div className="flex gap-4">
-                    <FontAwesomeIcon icon={faPlus} title="Créer une communauté"/>
-                    <FontAwesomeIcon icon={faMessage} title="Aller à la messagerie"/>
-                    <FontAwesomeIcon icon={faUser} title="Login"/>
+                <div className="flex gap-4 relative items-center h-[5vh]">
+                    <div className="w-33 flex justify-between">
+                        <FontAwesomeIcon className="cursor-pointer" icon={faPlus} title="Créer une communauté"/>
+                        <FontAwesomeIcon className="cursor-pointer" icon={faMessage} title="Aller à la messagerie"/>
+                        <FontAwesomeIcon id="btnLogin" className="cursor-pointer" onClick={() => setIsLoginBoxOpen(isOpen => !isOpen)} icon={faUser} title="Login"/>
+                    </div>
+                    {isLoginBoxOpen && (
+                        <div id="loginBox" className="absolute rounded top-full bg-primary-50 border border-gray-400 left-0 right-0 text-gray-700">
+                            <Link to={'/register'}><button className="pt-1 w-full pb-1 hover:bg-primary-300 hover:cursor-pointer">S'inscrire</button></Link>
+                            <Link to={'/login'}><button className="pt-1 w-full pb-1 hover:bg-primary-300 hover:cursor-pointer">Se connecter</button></Link>
+                        </div>
+                    )}
                 </div>
+                
             </header>
             
         </>
