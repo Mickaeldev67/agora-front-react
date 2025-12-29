@@ -3,11 +3,13 @@ import { faUser, faMessage, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import useFetch from "../services/useFetch";
 import { Link } from "react-router";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 function Header() {
     const [search, setSearch] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState('');
     const [isLoginBoxOpen, setIsLoginBoxOpen] = useState(false);
+    const [token, setToken] = useState(localStorage.getItem('token'));
     const url = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
@@ -53,6 +55,11 @@ function Header() {
     function resetSearchBar() {
         setSearch('');
         setDebouncedSearch('');
+    }
+
+    function logout() {
+        localStorage.removeItem('token');
+        setToken(null);
     }
 
     return (
@@ -109,7 +116,13 @@ function Header() {
                     <div className="w-33 flex justify-between">
                         <FontAwesomeIcon className="cursor-pointer" icon={faPlus} title="Créer une communauté"/>
                         <FontAwesomeIcon className="cursor-pointer" icon={faMessage} title="Aller à la messagerie"/>
-                        <FontAwesomeIcon id="btnLogin" className="cursor-pointer" onClick={() => setIsLoginBoxOpen(isOpen => !isOpen)} icon={faUser} title="Login"/>
+                        {!token && (
+                            <FontAwesomeIcon id="btnLogin" className="cursor-pointer" onClick={() => setIsLoginBoxOpen(isOpen => !isOpen)} icon={faUser} title="Login"/>
+                        )}
+
+                        {token && (
+                            <FontAwesomeIcon icon={faRightFromBracket} className="cursor-pointer" onClick={logout}/>
+                        )}
                     </div>
                     {isLoginBoxOpen && (
                         <div id="loginBox" className="absolute rounded top-full bg-primary-50 border border-gray-400 left-0 right-0 text-gray-700">

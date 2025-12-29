@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import useFetch from "../services/useFetch";
+import { useNavigate } from "react-router";
 
 function Login () {
     const url = import.meta.env.VITE_API_URL;
     const [shouldConnect, setShouldConnect] = useState(false);
     const [localError, setLocalError] = useState(null);
+    const navigate = useNavigate(); 
     const [form, setForm] = useState({
         email: '',
         password: '',
@@ -36,6 +38,7 @@ function Login () {
         if (token) {
             setLocalError(null);
             localStorage.setItem('token', token);
+            navigate('/');
         }
     }, [error, data]);
 
