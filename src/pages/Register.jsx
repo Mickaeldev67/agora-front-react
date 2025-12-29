@@ -76,8 +76,6 @@ function Register () {
                         )}
                     </section>
                 </form>
-                
-                
             </main>
         </>
     );
