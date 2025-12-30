@@ -54,32 +54,29 @@ function Login () {
         setShouldConnect(true);
     }
     return (
-        <>
-            <Header />
-             <main className="bg-primary-50 p-8 h-[95vh]">
-                <h1 className="text-primary-400 text-2xl">Register</h1>
-                <form onSubmit={(e) => { e.preventDefault(); sendConnection(); }} className="flex justify-center">
-                    <section className="flex h-full flex-col justify-center items-center bg-gray-50 border border-gray-800 rounded w-66 gap-3 p-3">
-                        <label htmlFor="email">Email</label>
-                        <input required value={form.email} onChange={handleChange} className="p-2 border rounded" id="email" name="email" placeholder="johndoe@gmail.com" type="text" />
-                        <label htmlFor="password">Mot de passe</label>
-                        <input required value={form.password} onChange={handleChange} className="p-2 border rounded" id="password" name="password" type="password" placeholder="JohnDoe"/>
-                        <button className="border rounded p-1 bg-green-400 text-gray-50 cursor-pointer" onClick={sendConnection}>Se connecter</button>
-                        {loading && (
-                            <span className="mr-3 size-5 animate-spin text-gray-800 text-center">|</span>
-                        )}
-                        { data && (
-                            <>
-                                <span className="text-green-400">Vous êtes connecté !</span>
-                            </>
-                        )}
-                        {localError && (
-                            <span className="text-red-400">Erreur {localError.status} : {localError.message}</span>
-                        )}
-                    </section>
-                </form>
-            </main>
-        </>
+        <section>
+            <h1 className="text-primary-400 text-2xl">Se connecter</h1>
+            <form onSubmit={(e) => { e.preventDefault(); sendConnection(); }} className="flex justify-center">
+                <article className="flex h-full flex-col justify-center items-center bg-gray-50 border border-gray-800 rounded w-66 gap-3 p-3">
+                    <label htmlFor="email">Email</label>
+                    <input required value={form.email} onChange={handleChange} className="p-2 border rounded" id="email" name="email" placeholder="johndoe@gmail.com" type="text" />
+                    <label htmlFor="password">Mot de passe</label>
+                    <input required value={form.password} onChange={handleChange} className="p-2 border rounded" id="password" name="password" type="password" placeholder="JohnDoe"/>
+                    <button className="border rounded p-1 bg-green-400 text-gray-50 cursor-pointer" onClick={sendConnection}>Se connecter</button>
+                    {loading && (
+                        <span className="mr-3 size-5 animate-spin text-gray-800 text-center">|</span>
+                    )}
+                    { data && (
+                        <>
+                            <span className="text-green-400">Vous êtes connecté !</span>
+                        </>
+                    )}
+                    {localError && (
+                        <span className="text-red-400">Erreur {localError.status} : {localError.message}</span>
+                    )}
+                </article>
+            </form>
+        </section>
     );
 }
 
