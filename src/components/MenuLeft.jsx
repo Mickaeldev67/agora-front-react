@@ -26,9 +26,9 @@ function MenuLeft () {
                         <>
                         {communities.map((community) => (
                             <li key={community.id} className="flex justify-between items-center">
-                                <Link className="py-1 hover:text-gray-300" to={`/community/${community.id}`}>{community.name}</Link>
+                                <Link className="py-1 hover:text-gray-300 w-full" to={`/community/${community.id}`}>{community.name}</Link>
                                 {/* TODO : suppression a implémenter */}
-                                <FontAwesomeIcon icon={faStar} onClick={() => removeCommunity(community.id)} />
+                                <FontAwesomeIcon className="hover:text-gray-500 cursor-pointer" icon={faStar} onClick={() => removeCommunity(community.id)} />
                             </li>
                         ))}
                         </>

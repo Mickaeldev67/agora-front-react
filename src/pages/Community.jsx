@@ -32,7 +32,7 @@ function Community () {
                     <div id="title" className="flex gap-3 items-center">
                         <h1 className="text-primary-400 text-2xl">{data.community.name}</h1>
                         <FontAwesomeIcon
-                            className="text-sm"
+                            className="text-sm cursor-pointer hover:text-gray-500"
                             icon={isUserCommunity ? faStarSolid : faStarRegular}
                             onClick={() => {
                                 if (isUserCommunity) removeCommunity(params.id);
