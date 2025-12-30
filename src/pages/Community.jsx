@@ -6,13 +6,13 @@ import { useUserCommunities } from "../context/UserCommunitiesContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as faStarSolid} from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarRegular} from "@fortawesome/free-regular-svg-icons";
+import { useState } from "react";
 
 function Community () {
     const params = useParams();
     const url = import.meta.env.VITE_API_URL;
     const { data, loading, error } = useFetch(`${url}/community/${params.id}/threads`);
-    const { communities } = useUserCommunities();
-
+    const { communities, addCommunity, removeCommunity } = useUserCommunities();
     const isUserCommunity = communities.some(
         (community) => community.id === Number(params.id)
     );
@@ -31,11 +31,14 @@ function Community () {
                 <>
                     <div id="title" className="flex gap-3 items-center">
                         <h1 className="text-primary-400 text-2xl">{data.community.name}</h1>
-                        {
-                        isUserCommunity 
-                        ? <FontAwesomeIcon className="text-sm" icon={faStarSolid} />
-                        : <FontAwesomeIcon className="text-sm" icon={faStarRegular} />
-                        }
+                        <FontAwesomeIcon
+                            className="text-sm"
+                            icon={isUserCommunity ? faStarSolid : faStarRegular}
+                            onClick={() => {
+                                if (isUserCommunity) removeCommunity(params.id);
+                                else addCommunity(data.community);
+                            }}
+                        />
                     </div>
                     
                     <div className="flex gap-3">
