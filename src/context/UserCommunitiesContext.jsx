@@ -9,12 +9,21 @@ export function UserCommunitiesProvider({ children }) {
     const url = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
-        function handleStorageChange() {
-            setToken(localStorage.getItem("token"));
+        if (!token) {
+            setCommunities([]); // vide les communautés si on se déconnecte
         }
-        window.addEventListener("storage", handleStorageChange);
-        return () => window.removeEventListener("storage", handleStorageChange);
-    }, []);
+    }, [token]);
+
+    function logout() {
+        localStorage.removeItem("token");
+        setToken(null);
+        setCommunities([]);
+    }
+
+    function login(newToken) {
+        localStorage.setItem("token", newToken);
+        setToken(newToken);
+    }
 
     const { data } = useFetch(
         token ? `${url}/api/user/communities` : null,
@@ -72,7 +81,7 @@ export function UserCommunitiesProvider({ children }) {
 
     return (
         <UserCommunitiesContext.Provider
-            value={{ communities, addCommunity, removeCommunity, isFavorite }}
+            value={{ communities, addCommunity, removeCommunity, isFavorite, token, logout, login }}
         >
             {children}
         </UserCommunitiesContext.Provider>

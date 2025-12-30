@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 import useFetch from "../services/useFetch";
 import { Link } from "react-router";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { useUserCommunities } from "../context/userCommunitiesContext";
 
 function Header() {
     const [search, setSearch] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState('');
     const [isLoginBoxOpen, setIsLoginBoxOpen] = useState(false);
-    const [token, setToken] = useState(localStorage.getItem('token'));
     const url = import.meta.env.VITE_API_URL;
+    const { logout, token} = useUserCommunities();
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -55,11 +56,6 @@ function Header() {
     function resetSearchBar() {
         setSearch('');
         setDebouncedSearch('');
-    }
-
-    function logout() {
-        localStorage.removeItem('token');
-        setToken(null);
     }
 
     return (
