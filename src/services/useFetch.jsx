@@ -15,7 +15,7 @@ function useFetch(url, options = {}) {
                     'Content-Type':'application/json',
                     ...options.headers,
                 },
-                body: options.body ? JSON.stringify(options.body) : null,
+                body: options.body ? JSON.stringify(options.body) : undefined,
             }
         )
             .then((res) => {

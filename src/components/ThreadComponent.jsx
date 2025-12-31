@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import Reaction from "./Reaction";
 
-function ThreadComponent({ thread: { id, community, updatedAt, createdAt, user, title, content, nbVote, nbPost } }) {
+function ThreadComponent({ thread: { id, community, updatedAt, createdAt, user, title, content, nbVote, nbPost, reaction }, isCommentLink }) {
     return(
         <article className="border rounded p-4 mb-4 bg-gray-100">
             <div className="text-xs flex flex-col">
@@ -15,7 +15,7 @@ function ThreadComponent({ thread: { id, community, updatedAt, createdAt, user, 
             <span className="text-xl text-gray-800">{title}</span>
             <p className="text-gray-600">{content}</p>
 
-            <Reaction nbVote={nbVote} nbPost={nbPost} threadId={id} type={"thread"}/>
+            <Reaction nbVote={nbVote} nbPost={nbPost} id={id} type={"thread"} isCommentLink={isCommentLink} reaction={reaction}/>
         </article>
     );
 }
