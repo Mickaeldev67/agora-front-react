@@ -23,11 +23,7 @@ function Thread () {
                     <p>Erreur { error.status } : { error.message }</p>
                 )}
                 { data && (
-                    <>
-                        <ThreadComponent thread={data.thread} id={data.thread.id}/>
-                        {console.log('here')}
-                        {console.log(data.thread)}                
-                    </>
+                    <ThreadComponent thread={data.thread} id={data.thread.id}/>
                 )}
                 { data && (
                     <>
