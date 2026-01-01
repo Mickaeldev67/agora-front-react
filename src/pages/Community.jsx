@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import useFetch from "../services/useFetch";
 import ThreadComponent from "../components/ThreadComponent";
 import SkeletonComponent from "../components/SkeletonComponent";
@@ -7,12 +7,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as faStarSolid} from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarRegular} from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 function Community () {
     const params = useParams();
     const url = import.meta.env.VITE_API_URL;
     const { data, loading, error } = useFetch(`${url}/community/${params.id}/threads`);
-    const { communities, addCommunity, removeCommunity } = useUserCommunities();
+    const { communities, addCommunity, removeCommunity, token } = useUserCommunities();
     const isUserCommunity = communities.some(
         (community) => community.id === Number(params.id)
     );
@@ -39,6 +40,13 @@ function Community () {
                                 else addCommunity(data.community);
                             }}
                         />
+                        {token && (
+                            <Link to={'/newThread'} title="Créer un thread" state={{ community: data?.community }}>
+                                <FontAwesomeIcon 
+                                    icon={faPlus} 
+                                />
+                            </Link>
+                        )}
                     </div>
                     
                     <div className="flex gap-3">
