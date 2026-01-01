@@ -17,14 +17,17 @@ function App() {
         <Header />
         <main className="bg-gray-50 h-[95vh] flex justify-between">
           <MenuLeft />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/thread/:id" element={<Thread />} />
-            <Route path="/community/:id" element={<Community />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/newThread' element={<NewThread />} />
-          </Routes>
+          <div className='flex-1 overflow-auto p-5'>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/thread/:id" element={<Thread />} />
+              <Route path="/community/:id" element={<Community />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/newThread' element={<NewThread />} />
+            </Routes>
+          </div>
+
           <div></div>
         </main>
       </UserCommunitiesProvider>
