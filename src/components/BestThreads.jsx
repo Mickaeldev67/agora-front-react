@@ -5,8 +5,11 @@ import Thread from "./ThreadComponent";
 
 function Threads() {
     const url = import.meta.env.VITE_API_URL;
-    const { token } = useUserCommunities();
+    const { token, isTokenExpired, logout } = useUserCommunities();
     const options = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+    if (token && isTokenExpired(token)) {
+        logout();
+    }
     const { data, loading, error } = useFetch(`${url}/api/thread/best-reacted`, options);
     return (
         <section className="pt-8 pb-8">

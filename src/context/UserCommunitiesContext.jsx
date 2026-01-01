@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import useFetch from "../services/useFetch";
+import { jwtDecode } from "jwt-decode";
 
 const UserCommunitiesContext = createContext();
 
@@ -79,9 +80,22 @@ export function UserCommunitiesProvider({ children }) {
         return communities.some(c => c.id === Number(id));
     }
 
+    function isTokenExpired(token) {
+        try {
+            const decoded = jwtDecode(token); // Décode le token
+            const currentTime = Date.now() / 1000; // Heure actuelle en secondes
+
+            // Vérifie si la date d'expiration est dans le passé
+            return decoded.exp < currentTime;
+        } catch (error) {
+            console.error("Erreur lors du décodage du token", error);
+            return true; // En cas d'erreur de décodage, on considère que le token est expiré
+        }
+    }
+
     return (
         <UserCommunitiesContext.Provider
-            value={{ communities, addCommunity, removeCommunity, isFavorite, token, logout, login }}
+            value={{ communities, addCommunity, removeCommunity, isFavorite, token, logout, login, isTokenExpired }}
         >
             {children}
         </UserCommunitiesContext.Provider>
