@@ -8,6 +8,7 @@ import MenuLeft from './components/MenuLeft'
 import Header from './components/Header'
 import { UserCommunitiesProvider } from "./context/UserCommunitiesContext";
 import NewThread from './pages/newThread'
+import EditThread from './pages/EditThread'
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
               <Route path='/register' element={<Register />} />
               <Route path='/login' element={<Login />} />
               <Route path='/newThread' element={<NewThread />} />
+              <Route path='/editThread' element={<EditThread />} />
             </Routes>
           </div>
 

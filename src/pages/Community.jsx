@@ -6,17 +6,26 @@ import { useUserCommunities } from "../context/UserCommunitiesContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as faStarSolid} from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarRegular} from "@fortawesome/free-regular-svg-icons";
-import { useState } from "react";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
 
 function Community () {
     const params = useParams();
     const url = import.meta.env.VITE_API_URL;
-    const { data, loading, error } = useFetch(`${url}/community/${params.id}/threads`);
-    const { communities, addCommunity, removeCommunity, token } = useUserCommunities();
+    const { communities, addCommunity, removeCommunity, token, isTokenExpired, logout } = useUserCommunities();
+    const [refresh, setRefresh] = useState(0);
+    const options = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+    const handleRefresh = () => setRefresh(prev => prev + 1);
+    const { data, loading, error } = useFetch(`${url}/api/community/${params.id}/threads?refresh=${refresh}`, options);
     const isUserCommunity = communities.some(
         (community) => community.id === Number(params.id)
     );
+
+    useEffect(() => {
+        if (token && isTokenExpired(token)) {
+            logout();
+        }
+    }, [token, logout, isTokenExpired]);
 
     return (
         <section>
@@ -57,7 +66,7 @@ function Community () {
                     
                     <p><span>Description : </span>{data.community.description}</p>
                         { data.threads.map(thread => (
-                            <ThreadComponent key={thread.id} thread={thread} />
+                            <ThreadComponent key={thread.id} thread={thread} isCommentLink={true} onThreadDeleted={handleRefresh} />
                         ))}
                 </>
             )}

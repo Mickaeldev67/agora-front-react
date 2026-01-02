@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useFetch from "../services/useFetch";
 import Skeleton from "../components/SkeletonComponent";
 import Reaction from "../components/Reaction";
@@ -11,6 +11,11 @@ function Thread () {
     const { token } = useUserCommunities();
     const options = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
     const { data, loading, error } = useFetch(`${url}/api/thread/${params?.id}/posts`, options);
+    const navigate = useNavigate();
+
+    function handleRefresh() {
+        navigate("/", { replace: true });
+    }
     return (
         <section>
                 <h1 className="text-primary-400 text-2xl">Thread</h1>
@@ -23,7 +28,7 @@ function Thread () {
                     <p>Erreur { error.status } : { error.message }</p>
                 )}
                 { data && (
-                    <ThreadComponent thread={data.thread} id={data.thread.id}/>
+                    <ThreadComponent thread={data.thread} id={data.thread.id} onThreadDeleted={handleRefresh}/>
                 )}
                 { data && (
                     <>

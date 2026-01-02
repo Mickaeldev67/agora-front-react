@@ -1,15 +1,16 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { useUserCommunities } from "../context/userCommunitiesContext";
+import useFetch from "../services/useFetch";
 
-function NewThread() {
+function EditThread() {
     const location = useLocation();
     const navigate = useNavigate();
-    const community = location.state?.community;
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
+    const thread = location.state?.thread;
+    const [title, setTitle] = useState(thread?.title);
+    const [content, setContent] = useState(thread?.content);
     const [loading, setLoading] = useState(false);
+    const [localError, setLocalError] = useState("");
     const url = import.meta.env.VITE_API_URL;
     const { token, isTokenExpired, logout } = useUserCommunities();
     useEffect(() => {
@@ -19,44 +20,10 @@ function NewThread() {
     }, [token, logout, isTokenExpired]);
 
     useEffect(() => {
-        if (!community) {
+        if (!thread) {
             navigate("/", { replace: true });
         }
-    }, [community, navigate]);
-
-
-    if (!community) {
-        return null;
-    }
-
-    function handleSubmit(e) {
-        e.preventDefault();
-        if (!title || !content) return;
-
-        const body = {
-            title,
-            content,
-            community_id: Number(community.id),
-        };
-        setLoading(true);
-
-        fetch(`${url}/api/thread/create`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(body),
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.thread?.id) {
-                    navigate(`/thread/${data.thread.id}`, { replace: true });
-                }
-            })
-            .catch(err => console.error(err))
-            .finally(setLoading(false));
-    }
+    }, [thread, navigate]);
 
     function handleTitle(e) {
         setTitle(e.target.value);
@@ -66,10 +33,43 @@ function NewThread() {
         setContent(e.target.value);
     }
 
-    return (
+    function handleSubmit(e) {
+        e.preventDefault();
+        if (!title || !content || !token) return;
+        const options = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                id: thread?.id,
+                title,
+                content,
+            }),
+        };
+
+        setLoading(true);
+        fetch(`${url}/api/thread/update`, options)
+            .then(async res => {
+                const data = await res.json();
+                if (!res.ok) {
+                    throw new Error(data.error || "Erreur inconnue");
+                }
+                return data;
+            })
+            .then(data => {
+                if (data.thread?.id) {
+                    navigate(`/thread/${data.thread.id}`, { replace: true });
+                }
+            })
+            .catch(err => setLocalError(err.message))
+            .finally(() => setLoading(false));
+    }
+    return(
         <section className="pt-8 pb-8">
             <h1 className="text-primary-400 text-2xl">
-                Création d'un thread dans {community.name}
+                Modification du Thread
             </h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="title">Titre</label>
@@ -91,14 +91,17 @@ function NewThread() {
                     onChange={handleContent}
                 />
                 <div className="flex gap-4 items-center justify-center">
-                    <button type="submit" className="border px-3 py-1 rounded border-green-500 bg-green-300 text-gray-50">Créer</button>
+                    <button disabled={loading} type="submit" className="border px-3 py-1 rounded border-green-500 bg-green-300 text-gray-50">Modifier</button>
                     {loading && (
                         <span className="mr-3 size-5 animate-spin text-gray-800 text-center">|</span>
                     )}
                 </div>
             </form>
+            { localError && (
+                <span className="text-red-400">{localError}</span>
+            )}
         </section>
     );
 }
 
-export default NewThread;
+export default EditThread;
