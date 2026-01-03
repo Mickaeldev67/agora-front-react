@@ -9,6 +9,7 @@ import Header from './components/Header'
 import { UserCommunitiesProvider } from "./context/UserCommunitiesContext";
 import NewThread from './pages/newThread'
 import EditThread from './pages/EditThread'
+import NewCommunity from './pages/NewCommunity'
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
               <Route path='/login' element={<Login />} />
               <Route path='/newThread' element={<NewThread />} />
               <Route path='/editThread' element={<EditThread />} />
+              <Route path='/newCommunity' element={<NewCommunity />} />
             </Routes>
           </div>
 

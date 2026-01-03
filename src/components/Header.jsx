@@ -109,9 +109,13 @@ function Header() {
                 </div>
                 
                 <div className="flex gap-4 relative items-center h-[5vh]">
-                    <div className="w-33 flex justify-between">
-                        <FontAwesomeIcon className="cursor-pointer" icon={faPlus} title="Créer une communauté"/>
-                        <FontAwesomeIcon className="cursor-pointer" icon={faMessage} title="Aller à la messagerie"/>
+                    <div className={`w-33 flex ${token ? 'justify-between' : 'justify-end'} items-center`}>
+                        { token && (
+                            <>
+                                <Link to={'/newCommunity'} title="Créer une communauté"><FontAwesomeIcon icon={faPlus}/></Link>
+                                <FontAwesomeIcon className="cursor-pointer" icon={faMessage} title="Aller à la messagerie"/>
+                            </>
+                        )}
                         {!token && (
                             <FontAwesomeIcon id="btnLogin" className="cursor-pointer" onClick={() => setIsLoginBoxOpen(isOpen => !isOpen)} icon={faUser} title="Login"/>
                         )}
