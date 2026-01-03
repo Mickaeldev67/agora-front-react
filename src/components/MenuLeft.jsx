@@ -28,7 +28,7 @@ function MenuLeft () {
                             <li key={community.id} className="flex justify-between items-center">
                                 <Link className="py-1 hover:text-gray-300 w-full" to={`/community/${community.id}`}>{community.name}</Link>
                                 {/* TODO : suppression a implémenter */}
-                                <FontAwesomeIcon className="hover:text-gray-500 cursor-pointer" icon={faStar} onClick={() => removeCommunity(community.id)} />
+                                <span title="Retirer des favoris"><FontAwesomeIcon className="hover:text-gray-500 cursor-pointer" icon={faStar} onClick={() => removeCommunity(community.id)} /></span>
                             </li>
                         ))}
                         </>
