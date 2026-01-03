@@ -10,6 +10,7 @@ import { UserCommunitiesProvider } from "./context/UserCommunitiesContext";
 import NewThread from './pages/newThread'
 import EditThread from './pages/EditThread'
 import NewCommunity from './pages/NewCommunity'
+import EditCommunity from './pages/editCommunity'
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
               <Route path='/newThread' element={<NewThread />} />
               <Route path='/editThread' element={<EditThread />} />
               <Route path='/newCommunity' element={<NewCommunity />} />
+              <Route path='/editCommunity' element={<EditCommunity />} />
             </Routes>
           </div>
 

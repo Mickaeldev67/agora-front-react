@@ -8,6 +8,7 @@ import { faStar as faStarSolid} from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarRegular} from "@fortawesome/free-regular-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
 
 function Community () {
     const params = useParams();
@@ -50,11 +51,14 @@ function Community () {
                             }}
                         />
                         {token && (
-                            <Link to={'/newThread'} title="Créer un thread" state={{ community: data?.community }}>
-                                <FontAwesomeIcon 
-                                    icon={faPlus} 
-                                />
-                            </Link>
+                            <>
+                                <Link to={'/newThread'} title="Créer un thread" state={{ community: data?.community }}>
+                                    <FontAwesomeIcon 
+                                        icon={faPlus} 
+                                    />
+                                </Link>
+                                { data.community?.isAdmin && (<Link to={'/editCommunity'} state={{community: data?.community}} title="Modifier la communauté"><FontAwesomeIcon icon={faPencil} /></Link>)}
+                            </>
                         )}
                     </div>
                     

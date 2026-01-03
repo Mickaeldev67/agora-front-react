@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { useUserCommunities } from "../context/userCommunitiesContext";
-import useFetch from "../services/useFetch";
 
 function EditThread() {
     const location = useLocation();
