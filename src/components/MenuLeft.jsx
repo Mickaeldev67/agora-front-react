@@ -13,9 +13,9 @@ function MenuLeft () {
     }
 
     return (
-        <aside className="h-full pt-8 pb-8 pr-4 pl-4 border-r border-gray-300 relative">
+        <aside className={`${isContentOpen && 'w-66'} h-full pt-8 pb-8 pr-4 pl-4 border-r border-gray-300 relative`}>
             <FontAwesomeIcon 
-                className={`${isContentOpen ? 'right-[-9%]' : 'right-[-48%]'} absolute text-gray-50 bg-gray-400 p-1 rounded-3xl text-lg cursor-pointer`}
+                className={`${isContentOpen ? 'right-[-6%]' : 'right-[-48%]'} absolute text-gray-50 bg-gray-400 p-1 rounded-3xl text-lg cursor-pointer`}
                 icon={faBurger} 
                 onClick={burgerToggler}
             />
