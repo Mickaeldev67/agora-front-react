@@ -113,7 +113,7 @@ function Header() {
                         { token && (
                             <>
                                 <Link to={'/newCommunity'} title="Créer une communauté"><FontAwesomeIcon icon={faPlus}/></Link>
-                                <FontAwesomeIcon className="cursor-pointer" icon={faMessage} title="Aller à la messagerie"/>
+                                <Link to={'/message'} title="Aller à la messagerie"><FontAwesomeIcon className="cursor-pointer" icon={faMessage}/></Link>
                             </>
                         )}
                         {!token && (
