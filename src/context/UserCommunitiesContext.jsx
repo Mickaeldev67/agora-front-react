@@ -8,10 +8,25 @@ export function UserCommunitiesProvider({ children }) {
     const [communities, setCommunities] = useState([]);
     const [token, setToken] = useState(localStorage.getItem("token"));
     const url = import.meta.env.VITE_API_URL;
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         if (!token) {
             setCommunities([]); // vide les communautés si on se déconnecte
+        }
+        if (token) {
+            fetch(`${url}/api/user/me`, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+                .then(res => {
+                    if (!res.ok) throw new Error("Utilisateur non trouvé");
+                    return res.json();
+                })
+                .then(data => setUser(data))
+                .catch(err => {
+                    console.error(err);
+                    setUser(null);
+                });
         }
     }, [token]);
 
@@ -95,7 +110,7 @@ export function UserCommunitiesProvider({ children }) {
 
     return (
         <UserCommunitiesContext.Provider
-            value={{ communities, addCommunity, removeCommunity, isFavorite, token, logout, login, isTokenExpired }}
+            value={{ communities, addCommunity, removeCommunity, isFavorite, token, logout, login, isTokenExpired, user }}
         >
             {children}
         </UserCommunitiesContext.Provider>

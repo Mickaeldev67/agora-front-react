@@ -1,19 +1,42 @@
 import Skeleton from "react-loading-skeleton";
 import { useUserCommunities } from "../context/UserCommunitiesContext";
 import useFetch from "../services/useFetch";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Conversation({ user }) {
-    const { token } = useUserCommunities();
+    const { token, user: me } = useUserCommunities();
     const [messageToSend, setMessageToSend] = useState('');
     const [sendError, setSendError] = useState('');
+    const [messages, setMessages] = useState([]);
     const url = import.meta.env.VITE_API_URL;
+    const hubUrl = import.meta.env.VITE_MERCURE_URL;
 
     const options = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
     const { data, loading, error } = useFetch(
         user?.id ? `${url}/api/message/${user.id}` : null,
         options
     );
+
+    useEffect(() => {
+        if (data) setMessages(data);
+    }, [data]);
+
+    /* Mercure */
+    useEffect(() => {
+        if (!user?.id || !me?.id) return;
+        const topic = `conversation-${Math.min(user.id, me.id)}-${Math.max(user.id, me.id)}`;
+        const url = new URL(hubUrl);
+        url.searchParams.append('topic', topic);
+
+        const es = new EventSource(url, { withCredentials: true });
+
+        es.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            setMessages(prev => [...prev, data]);
+        };
+
+        return () => es.close();
+    }, [user]);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -35,28 +58,27 @@ function Conversation({ user }) {
                 if (!res.ok) throw new Error("Erreur envoi message");
                 return res.json();
             })
-            .then(() => {
-                setMessageToSend(""); // reset textarea
-                // 👉 idéalement : refresh messages (voir plus bas)
+            .then((newMessage) => {
+                setMessageToSend(""); 
             })
             .catch(err => setSendError(err));
     }
     return (
         <div className="flex flex-col flex-1 h-[70vh]">
-            <section className="border rounded flex-1">
+            <h2 className="bg-gray-100 text-center">{user.pseudo}</h2>
+            <section className="border rounded flex-1 overflow-auto">
                 {loading && (<Skeleton width={300} />)}
                 {error && (<span className="text-red-400">Erreur {error.status} : {error.message}</span>)}
-                {data && (
+                {messages && (
                     <>
-                        <h2 className="bg-gray-100 text-center">{user.pseudo}</h2>
-                        {data.map((conversation, index) => {
+                        {messages.map((conversation, index) => {
                             const isLastMessage = index === data.length - 1;
-                            const isSentByMe = conversation.issuer.pseudo !== user.pseudo;
+                            const isSentByMe = conversation.issuer?.id === me?.id;
                             const isViewed = conversation.is_view === true;
 
                             return (
                                 <div
-                                    key={conversation.id}
+                                    key={conversation.id ? conversation.id : `${conversation.created_at}-${index}`}
                                     className={`flex p-3 ${isSentByMe ? "justify-end" : "justify-start"
                                         }`}
                                 >
