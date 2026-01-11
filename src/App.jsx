@@ -12,6 +12,7 @@ import EditThread from './pages/EditThread'
 import NewCommunity from './pages/NewCommunity'
 import EditCommunity from './pages/editCommunity'
 import Message from './pages/Message'
+import EditPost from './pages/EditPost'
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
               <Route path='/newCommunity' element={<NewCommunity />} />
               <Route path='/editCommunity' element={<EditCommunity />} />
               <Route path='/message' element={<Message />} />
+              <Route path='/editPost' element={<EditPost />} />
             </Routes>
           </div>
 
