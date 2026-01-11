@@ -98,7 +98,6 @@ function Thread() {
         e.preventDefault();
         setErrorPost("");
         if (!content && !token) return;
-        console.log(content);
         const body = {
             content,
             thread_id: params?.id
@@ -139,7 +138,7 @@ function Thread() {
                     {
                         posts.length === 0 ? <p>Il n'y a pas de post sur ce thread, pourquoi ne pas vous lancer ?</p>
                             : posts.map(post => {
-                                const isOwner = post.user.id === user?.id;
+                                const isOwner = post.user?.id === user?.id;
                                 const isAdmin = user?.isAdmin;
                                 return (
                                     <article className="border rounded p-4 mb-4 bg-gray-50" key={post.id}>
