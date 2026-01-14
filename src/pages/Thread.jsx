@@ -143,8 +143,8 @@ function Thread() {
                                 return (
                                     <article className="border rounded p-4 mb-4 bg-gray-50" key={post.id}>
                                         <div className="flex justify-between">
-                                            <div className="text-xs">
-                                                <span className="font-bold">{post.pseudo}</span> <span>{new Date(post.updatedAt ?? post.createdAt).toLocaleDateString('fr-FR')}</span>
+                                            <div className="text-xs flex gap-2">
+                                                <Link to={'/message'} state={{user: post.user}}><span className="font-bold">{post.pseudo}</span></Link><span>{new Date(post.updatedAt ?? post.createdAt).toLocaleDateString('fr-FR')}</span>
                                             </div>
                                             {(isOwner || isAdmin) && (
                                                 <div className="relative text-base">

@@ -70,7 +70,7 @@ function ThreadComponent({ thread: { id, community, updatedAt, createdAt, user, 
                         {community && (<Link to={`/community/${community.id}`}><span className="font-bold">{community.name}</span></Link>)}
                         <span className="text-gray-400">{new Date(updatedAt ?? createdAt).toLocaleDateString('fr-FR')}</span>
                     </div>
-                    <span className="text-gray-400">{user.pseudo}</span>
+                    <Link to={'/message'} state={{user: user}}><span className="text-gray-400">{user.pseudo}</span></Link>
                 </div>
                 { (user?.isOwner || user?.isAdmin) && (
                 <div className="relative text-base" ref={settingsRef}>
