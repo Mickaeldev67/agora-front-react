@@ -22,20 +22,22 @@ function Message() {
     useEffect(() => {
         if (!data) return;
 
-        setUsers(prev => {
-            // si on vient d'une autre page avec un user
-            if (userState && !data.some(u => u.id === userState.id)) {
-                return [userState, ...data];
-            }
-            return data;
-        });
+        let finalUsers = data;
 
-        // sélection automatique
+        // Si on vient d'une autre page avec un user à ajouter
+        if (userState && !data.some(u => u.id === userState.id)) {
+            finalUsers = [userState, ...data];
+        }
+
+        setUsers(finalUsers);
+
+        // Sélection automatique
         if (userState) {
             setUser(userState);
-        } else if (data.length > 0) {
-            setUser(data[0]);
+        } else if (finalUsers.length > 0) {
+            setUser(finalUsers[0]);
         }
+
     }, [data, userState]);
     return (
         <section className="pt-8 pb-8">
@@ -49,6 +51,9 @@ function Message() {
                     )}
                     {error && (
                         <span className="text-red-400">Erreur {error.status} : {error.message}</span>
+                    )}
+                    {users.length === 0 && !loading && (
+                        <p className="text-gray-500">Aucune conversation</p>
                     )}
                     {users.length > 0 && users.map(u => (
                         <span

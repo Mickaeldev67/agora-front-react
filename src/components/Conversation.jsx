@@ -59,13 +59,22 @@ function Conversation({ user }) {
                 return res.json();
             })
             .then((newMessage) => {
-                setMessageToSend(""); 
+                setMessageToSend("");
             })
             .catch(err => setSendError(err));
     }
+    if (!user) {
+        return (
+            <div className="flex flex-col flex-1 h-[70vh] justify-center items-center text-gray-500">
+                Sélectionnez un utilisateur pour afficher la conversation
+            </div>
+        );
+    }
     return (
         <div className="flex flex-col flex-1 h-[70vh]">
-            <h2 className="bg-gray-100 text-center">{user.pseudo}</h2>
+            <h2 className="bg-gray-100 text-center">
+                {user ? user.pseudo : "Sélectionnez une conversation"}
+            </h2>
             <section className="border rounded flex-1 overflow-auto">
                 {loading && (<Skeleton width={300} />)}
                 {error && (<span className="text-red-400">Erreur {error.status} : {error.message}</span>)}
@@ -92,8 +101,8 @@ function Conversation({ user }) {
 
                                         <p
                                             className={`rounded-full w-fit py-1 px-2 ${isSentByMe
-                                                    ? "bg-blue-400 text-gray-50"
-                                                    : "bg-gray-100 text-gray-800"
+                                                ? "bg-blue-400 text-gray-50"
+                                                : "bg-gray-100 text-gray-800"
                                                 }`}
                                         >
                                             {conversation.content}
