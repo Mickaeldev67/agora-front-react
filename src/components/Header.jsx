@@ -60,10 +60,10 @@ function Header() {
 
     return (
         <>
-            <header className="flex justify-between items-center bg-primary-400 p-2 pl-5 pr-5 text-primary-50 h-[5vh]">
+            <header className="flex justify-between items-center bg-primary-400 gap-3 p-2 pl-5 pr-5 text-primary-50 h-[5vh]">
                 <Link to={'/'}><span>Agora</span></Link>
-                <div className="relative">
-                    <div className="w-[33vw]">
+                <div className="relative flex-1 md:flex-initial">
+                    <div className=" md:w-[33vw]">
                         <input value={search} onChange={searchingAPostOrACommunity} className="p-2 bg-gray-50 text-gray-400 rounded w-full" type="text" placeholder="Entrez votre recherche" />
                     </div>
                     {loading && (
