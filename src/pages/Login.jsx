@@ -61,10 +61,10 @@ function Login () {
             <form onSubmit={(e) => { e.preventDefault(); sendConnection(); }} className="flex justify-center">
                 <article className="flex h-full flex-col justify-center items-center bg-gray-50 border border-gray-800 rounded w-66 gap-3 p-3">
                     <label htmlFor="email">Email</label>
-                    <input required value={form.email} onChange={handleChange} className="p-2 border rounded" id="email" name="email" placeholder="johndoe@gmail.com" type="text" />
+                    <input data-testid="email" required value={form.email} onChange={handleChange} className="p-2 border rounded" id="email" name="email" placeholder="johndoe@gmail.com" type="text" />
                     <label htmlFor="password">Mot de passe</label>
-                    <input required value={form.password} onChange={handleChange} className="p-2 border rounded" id="password" name="password" type="password" placeholder="JohnDoe"/>
-                    <button className="border rounded p-1 bg-green-400 text-gray-50 cursor-pointer" onClick={sendConnection}>Se connecter</button>
+                    <input data-testid="password" required value={form.password} onChange={handleChange} className="p-2 border rounded" id="password" name="password" type="password" placeholder="JohnDoe"/>
+                    <button data-testid="send" className="border rounded p-1 bg-green-400 text-gray-50 cursor-pointer" onClick={sendConnection}>Se connecter</button>
                     {loading && (
                         <span className="mr-3 size-5 animate-spin text-gray-800 text-center">|</span>
                     )}

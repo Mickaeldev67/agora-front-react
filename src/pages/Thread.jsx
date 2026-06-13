@@ -181,8 +181,8 @@ function Thread() {
                     {token && (
                         <form onSubmit={handleSubmit}>
                             <div className="flex flex-col items-end gap-2">
-                                <textarea className="w-full px-2 py-1 border rounded" placeholder="Ecrivez votre message" onChange={(e) => setContent(e.target.value)} value={content}></textarea>
-                                <button type="submit" className="border px-3 py-1 rounded border-green-500 bg-green-300 text-gray-50">Envoyer</button>
+                                <textarea data-testid="thread" className="w-full px-2 py-1 border rounded" placeholder="Ecrivez votre message" onChange={(e) => setContent(e.target.value)} value={content}></textarea>
+                                <button data-testid="submit" type="submit" className="border px-3 py-1 rounded border-green-500 bg-green-300 text-gray-50">Envoyer</button>
                                 {loadingPost && (<span className="mr-3 size-5 animate-spin text-gray-800 text-center">|</span>)}
                                 {errorPost && (<span className="text-red-400">{{ errorPost }}</span>)}
                             </div>

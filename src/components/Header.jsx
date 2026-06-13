@@ -64,16 +64,16 @@ function Header() {
                 <Link to={'/'}><span>Agora</span></Link>
                 <div className="relative flex-1 md:flex-initial">
                     <div className=" md:w-[33vw]">
-                        <input value={search} onChange={searchingAPostOrACommunity} className="p-2 bg-gray-50 text-gray-400 rounded w-full" type="text" placeholder="Entrez votre recherche" />
+                        <input role="search" value={search} onChange={searchingAPostOrACommunity} className="p-2 bg-gray-50 text-gray-400 rounded w-full" type="text" placeholder="Entrez votre recherche" />
                     </div>
                     {loading && (
-                        <div className="absolute bg-gray-50 text-gray-400 left-0 right-0 rounded border">
+                        <div data-testid="result" className="absolute bg-gray-50 text-gray-400 left-0 right-0 rounded border">
                             Chargement...
                         </div>
                     )}
 
                     {!loading && data && debouncedSearch != '' && (
-                        <div className="absolute bg-gray-50 text-gray-400 left-0 right-0 rounded border">
+                        <div data-testid="result" className="absolute bg-gray-50 text-gray-400 left-0 right-0 rounded border">
                             {data.communities.length > 0 && (
                                 <>
                                     <div className="flex justify-center">
@@ -113,7 +113,7 @@ function Header() {
                         { token && (
                             <>
                                 <Link to={'/newCommunity'} title="Créer une communauté"><FontAwesomeIcon icon={faPlus}/></Link>
-                                <Link to={'/message'} title="Aller à la messagerie"><FontAwesomeIcon className="cursor-pointer" icon={faMessage}/></Link>
+                                <Link data-testid="messagerie" to={'/message'} title="Aller à la messagerie"><FontAwesomeIcon className="cursor-pointer" icon={faMessage}/></Link>
                             </>
                         )}
                         {!token && (
